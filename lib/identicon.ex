@@ -22,12 +22,17 @@ defmodule Iden do
   def build_grid(%Iden.Image{hex: hex} = image) do
     hex
     |> Enum.chunk(3)
-    |> mirror_row
+    |> Enum.map(&mirror_row/1)
   end
 
   def mirror_row(row) do
     [first, second | _tail] = row
     row ++ [second, first]
+  end
+
+  def my_func do
+    [1,2,3]
+    |> Enum.map(&my_func2/1)
   end
 
 end
