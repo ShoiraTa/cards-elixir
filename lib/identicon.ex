@@ -4,6 +4,7 @@ defmodule Iden do
     |> to_hash
     |> pick_color
     |> build_grid
+    |> filter_odd_squares
   end
 
   def to_hash(input) do
@@ -20,9 +21,21 @@ defmodule Iden do
   end
 
   def build_grid(%Iden.Image{hex: hex} = image) do
-    hex
-    |> Enum.chunk(3)
-    |> Enum.map(&mirror_row/1)
+    grid =
+      hex
+      |> Enum.chunk(3)
+      |> Enum.map(&mirror_row/1)
+      |> List.flatten
+      |> Enum.with_index
+    %Iden.Image{image | grid: grid}
+  end
+
+  def filter_odd_squares(%Iden.Image{grid: grid} = image) do
+    grid = Enum.filter grid, fn ({code, _index}) ->
+      rem(code, 2) == 0
+    end
+
+    %Iden.Image{image | grid: grid}
   end
 
   def mirror_row(row) do
@@ -30,9 +43,5 @@ defmodule Iden do
     row ++ [second, first]
   end
 
-  def my_func do
-    [1,2,3]
-    |> Enum.map(&my_func2/1)
-  end
 
 end
