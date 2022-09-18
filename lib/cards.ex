@@ -28,8 +28,7 @@ Returns a list of stringsrepresenting a deck of playing cards
       iex> deck =Cards.create_deck
       iex> {hand, deck } = Cards.deal(deck, 3)
       iex>  hand
-      #> ["Spades of Ace", "Spades of Two", "Spades of Three"]
-
+      ["Spades of Ace", "Spades of Two", "Spades of Three"]
   """
   def deal(deck, hand_size) do
     Enum.split(deck, hand_size )
